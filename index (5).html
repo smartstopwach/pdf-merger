@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folio — Merge PDFs, beautifully</title>
+<meta name="description" content="Merge PDF files locally in your browser. No uploads, no servers, full quality.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Ambient background -->
+<div class="aurora" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">
+        <span class="sheet sheet-1"></span>
+        <span class="sheet sheet-2"></span>
+        <span class="sheet sheet-3"></span>
+      </span>
+      <span class="brand-name">Folio</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#stack">Your stack</a>
+      <a href="#how">How it works</a>
+      <button class="icon-btn" id="settingsToggle" aria-label="Open settings" title="Settings">
+        <i class="fa-solid fa-sliders"></i>
+      </button>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow"><span class="dot"></span> 100% local — files never leave your device</p>
+      <h1 class="hero-title">
+        Every page,<br>
+        <span class="hero-title-emph">one binding.</span>
+      </h1>
+      <p class="hero-sub">Drop in your PDFs, arrange them like loose pages on a desk, and bind them into a single document — full resolution, original fonts, zero compromise.</p>
+    </div>
+  </section>
+
+  <!-- Upload -->
+  <section class="upload-section" id="stack">
+    <div class="upload-zone" id="dropZone" tabindex="0" role="button" aria-label="Upload PDF files">
+      <input type="file" id="fileInput" accept="application/pdf" multiple hidden>
+      <div class="upload-zone-inner">
+        <div class="upload-icon">
+          <i class="fa-regular fa-file-pdf"></i>
+          <div class="upload-icon-ring"></div>
+        </div>
+        <h3>Drag PDFs here, or click to browse</h3>
+        <p>Combine as many files as you like — up to 100 at once, 200&nbsp;MB each</p>
+      </div>
+      <div class="upload-glow" aria-hidden="true"></div>
+    </div>
+
+    <div class="stack-meta" id="stackMeta" hidden>
+      <div class="stack-meta-left">
+        <span class="meta-pill"><i class="fa-regular fa-copy"></i> <span id="fileCount">0</span> files</span>
+        <span class="meta-pill"><i class="fa-regular fa-file"></i> <span id="pageCount">0</span> pages</span>
+        <span class="meta-pill"><i class="fa-solid fa-weight-hanging"></i> <span id="totalSize">0 MB</span></span>
+      </div>
+      <div class="stack-meta-right">
+        <button class="ghost-btn" id="sortAlpha" title="Sort A → Z"><i class="fa-solid fa-arrow-down-a-z"></i></button>
+        <button class="ghost-btn" id="sortRecent" title="Sort by upload time"><i class="fa-regular fa-clock"></i></button>
+        <button class="ghost-btn" id="reverseOrder" title="Reverse order"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+        <button class="ghost-btn" id="undoDelete" title="Undo last delete (Ctrl+Z)" disabled><i class="fa-solid fa-rotate-left"></i></button>
+        <button class="ghost-btn danger" id="clearAll" title="Clear all"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+    </div>
+
+    <ul class="file-list" id="fileList" aria-label="Uploaded PDF files"></ul>
+
+    <div class="merge-bar" id="mergeBar" hidden>
+      <div class="merge-bar-info">
+        <i class="fa-solid fa-layer-group"></i>
+        <span><strong id="mergeFileCount">0</strong> files ready to bind, in this order</span>
+      </div>
+      <button class="primary-btn" id="mergeBtn">
+        <span>Bind PDFs</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how" id="how">
+    <h2>How the binding works</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <span class="how-num">First</span>
+        <i class="fa-regular fa-folder-open"></i>
+        <h4>Gather the pages</h4>
+        <p>Drop in every PDF you want combined. Each one gets a quick preview, page count, and size.</p>
+      </div>
+      <div class="how-card">
+        <span class="how-num">Then</span>
+        <i class="fa-solid fa-hand-pointer"></i>
+        <h4>Set the order</h4>
+        <p>Drag cards to reorder, rotate stray pages, or duplicate a cover — exactly the sequence you want bound.</p>
+      </div>
+      <div class="how-card">
+        <span class="how-num">Finally</span>
+        <i class="fa-solid fa-link"></i>
+        <h4>Bind, in your browser</h4>
+        <p>Folio stitches the document together on your device. Nothing is uploaded — your files never touch a server.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Folio runs entirely in your browser using pdf-lib and PDF.js. No file ever leaves your device.</p>
+  <p class="footer-fine">Built for paper-pushers, students, and anyone with too many PDFs.</p>
+</footer>
+
+<!-- Settings Sidebar -->
+<aside class="settings-panel" id="settingsPanel" aria-hidden="true">
+  <div class="settings-header">
+    <h3><i class="fa-solid fa-sliders"></i> Settings</h3>
+    <button class="icon-btn" id="settingsClose" aria-label="Close settings"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="settings-body">
+
+    <div class="setting-group">
+      <label for="outputName">Output filename</label>
+      <input type="text" id="outputName" value="merged-document" spellcheck="false">
+    </div>
+
+    <div class="setting-group">
+      <label>Compression</label>
+      <div class="segmented" id="compressionSeg">
+        <button class="seg-btn active" data-val="none">None</button>
+        <button class="seg-btn" data-val="light">Light</button>
+        <button class="seg-btn" data-val="strong">Strong</button>
+      </div>
+      <p class="setting-hint">None preserves full original quality.</p>
+    </div>
+
+    <div class="setting-group toggle-row">
+      <div>
+        <label>Keep metadata</label>
+        <p class="setting-hint">Title, author, creation date</p>
+      </div>
+      <label class="switch"><input type="checkbox" id="keepMetadata" checked><span class="slider"></span></label>
+    </div>
+
+    <div class="setting-group toggle-row">
+      <div>
+        <label>Preserve bookmarks</label>
+        <p class="setting-hint">Carry over outlines where supported</p>
+      </div>
+      <label class="switch"><input type="checkbox" id="keepBookmarks" checked><span class="slider"></span></label>
+    </div>
+
+    <div class="setting-group toggle-row">
+      <div>
+        <label>Animations</label>
+        <p class="setting-hint">Turn off for a quieter, faster UI</p>
+      </div>
+      <label class="switch"><input type="checkbox" id="animToggle" checked><span class="slider"></span></label>
+    </div>
+
+    <div class="setting-group">
+      <label>Theme</label>
+      <div class="segmented" id="themeSeg">
+        <button class="seg-btn active" data-val="dark"><i class="fa-solid fa-moon"></i> Dark</button>
+        <button class="seg-btn" data-val="light"><i class="fa-solid fa-sun"></i> Light</button>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <label>Keyboard shortcuts</label>
+      <ul class="shortcut-list">
+        <li><span>Undo delete</span><kbd>Ctrl</kbd>+<kbd>Z</kbd></li>
+        <li><span>Merge</span><kbd>Ctrl</kbd>+<kbd>Enter</kbd></li>
+        <li><span>Clear all</span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd></li>
+      </ul>
+    </div>
+
+  </div>
+</aside>
+<div class="scrim" id="settingsScrim"></div>
+
+<!-- Progress Modal -->
+<div class="modal-backdrop" id="progressModal" hidden>
+  <div class="modal progress-modal">
+    <div class="progress-ring-wrap">
+      <svg viewBox="0 0 120 120" class="progress-ring">
+        <circle cx="60" cy="60" r="52" class="progress-ring-bg"></circle>
+        <circle cx="60" cy="60" r="52" class="progress-ring-fg" id="progressRingFg"></circle>
+      </svg>
+      <div class="progress-ring-label">
+        <span id="progressPercent">0%</span>
+      </div>
+    </div>
+    <h3 id="progressStepTitle">Reading PDFs</h3>
+    <p id="progressStepSub">Opening each file and checking its pages…</p>
+    <div class="progress-steps">
+      <div class="pstep" data-step="1"><span class="pstep-dot"></span>Reading</div>
+      <div class="pstep" data-step="2"><span class="pstep-dot"></span>Merging</div>
+      <div class="pstep" data-step="3"><span class="pstep-dot"></span>Optimizing</div>
+      <div class="pstep" data-step="4"><span class="pstep-dot"></span>Ready</div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-backdrop" id="successModal" hidden>
+  <div class="modal success-modal">
+    <canvas id="confettiCanvas"></canvas>
+    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+    <h3>Your document is bound</h3>
+    <p>Everything stitched together, full quality, ready to go.</p>
+    <div class="success-stats">
+      <div><span id="successPages">0</span><label>pages</label></div>
+      <div><span id="successSize">0 MB</span><label>size</label></div>
+      <div><span id="successTime">0.0s</span><label>time</label></div>
+    </div>
+    <button class="primary-btn full" id="downloadBtn">
+      <i class="fa-solid fa-download"></i> <span>Download PDF</span>
+    </button>
+    <button class="ghost-btn full" id="mergeAnotherBtn">Bind another set</button>
+  </div>
+</div>
+
+<!-- Context menu -->
+<ul class="context-menu" id="contextMenu" hidden>
+  <li data-action="rename"><i class="fa-regular fa-pen-to-square"></i> Rename</li>
+  <li data-action="duplicate"><i class="fa-regular fa-copy"></i> Duplicate</li>
+  <li data-action="rotate"><i class="fa-solid fa-rotate-right"></i> Rotate 90°</li>
+  <li data-action="delete" class="danger-item"><i class="fa-regular fa-trash-can"></i> Delete</li>
+</ul>
+
+<!-- Toasts -->
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<!-- File card template -->
+<template id="fileCardTemplate">
+  <li class="file-card" draggable="false">
+    <span class="drag-handle" title="Drag to reorder"><i class="fa-solid fa-grip-vertical"></i></span>
+    <div class="card-thumb">
+      <i class="fa-regular fa-file-pdf thumb-fallback"></i>
+      <canvas class="thumb-canvas" hidden></canvas>
+      <span class="lock-badge" title="Encrypted-safe"><i class="fa-solid fa-lock"></i></span>
+      <span class="rotate-indicator" hidden><i class="fa-solid fa-rotate-right"></i></span>
+    </div>
+    <div class="card-info">
+      <p class="card-name" title=""></p>
+      <p class="card-meta">
+        <span class="card-pages">— pages</span>
+        <span class="dot-sep">·</span>
+        <span class="card-size">— KB</span>
+        <span class="dot-sep">·</span>
+        <span class="card-time">just now</span>
+      </p>
+    </div>
+    <div class="card-actions">
+      <button class="card-icon-btn" data-action="rotate" title="Rotate"><i class="fa-solid fa-rotate-right"></i></button>
+      <button class="card-icon-btn" data-action="duplicate" title="Duplicate"><i class="fa-regular fa-copy"></i></button>
+      <button class="card-icon-btn" data-action="more" title="More"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <button class="card-icon-btn danger" data-action="delete" title="Remove"><i class="fa-regular fa-trash-can"></i></button>
+    </div>
+    <div class="card-glow" aria-hidden="true"></div>
+  </li>
+</template>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
